@@ -49,7 +49,7 @@ def doSetup():
 class myHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	#Handler for the GET requests
 	def do_GET(self):
-		with open("index.html", "r") as httpFile:
+		with open("/opt/powerControl/index.html", "r") as httpFile:
 			httpData=httpFile.read()
 		# -------------------------------------------
 		self.send_response(200)
