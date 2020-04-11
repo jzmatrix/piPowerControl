@@ -1,0 +1,60 @@
+<html>
+	<body>
+		<center><h1>Server Control</h1></center>
+		<table align='center' border='0'>
+			<tr>
+				<td colspan='3'>
+					<center><input type='text' id='statusString' name='statusString' size='60' disabled></center>
+				</td>
+			</tr>
+			<tr>
+				<td><center><strong>Server-1</strong></center></td>
+				<td align='center'>
+					<input type='button' value='Power On' onclick='doButton("server1_power_on", "Powering On - Server 1");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Power Off' onclick='doButton("server1_power_off", "Powering Off - Server 1");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Reset' onclick='doButton("server1_power_reset", "Reset - Server 1");'><br>
+				</td>
+			</tr>
+			<tr>
+				<td><center><strong>Server-2</strong></center></td>
+				<td align='center'>
+					<input type='button' value='Power On' onclick='doButton("server2_power_on", "Powering On - Server 2");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Power Off' onclick='doButton("server2_power_off", "Powering Off - Server 2");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Reset' onclick='doButton("server2_power_reset", "Reset - Server 2");'><br>
+				</td>
+			</tr>
+			<tr>
+				<td><center><strong>Server-3</strong></center></td>
+				<td align='center'>
+					<input type='button' value='Power On' onclick='doButton("server3_power_on", "Powering On - Server 3");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Power Off' onclick='doButton("server3_power_off", "Powering Off - Server 3");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Reset' onclick='doButton("server3_power_reset", "Reset - Server 3");'><br>
+				</td>
+			</tr>
+			<tr>
+				<td><center><strong>Server-4</strong></center></td>
+				<td align='center'>
+					<input type='button' value='Power On' onclick='doButton("server4_power_on", "Powering On - Server 4");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Power Off' onclick='doButton("server4_power_off", "Powering Off - Server 4");'>
+					&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type='button' value='Reset' onclick='doButton("server4_power_reset", "Reset - Server 4");'><br>
+				</td>
+			</tr>
+		</table>
+		<script>
+			function doButton(a,b)
+			{
+				var statusString = document.getElementById('statusString')
+				statusString.value = b;
+				window.location = "/" + a;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,148 @@
+#!/usr/bin/python
+
+import BaseHTTPServer
+# from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
+import SimpleHTTPServer
+import SocketServer
+
+import RPi.GPIO as GPIO
+from time import sleep
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+httpPort = 8080
+
+server1_power = 4
+server1_reset = 17
+server2_power = 27
+server2_reset = 22
+server3_power = 5
+server3_reset = 6
+server4_power = 13
+server4_reset = 19
+
+################################################################################
+def doSetup():
+	# Init PIN functions
+	########
+	GPIO.setup(server1_power,GPIO.OUT)
+	GPIO.setup(server1_reset,GPIO.OUT)
+	GPIO.setup(server2_power,GPIO.OUT)
+	GPIO.setup(server2_reset,GPIO.OUT)
+	GPIO.setup(server3_power,GPIO.OUT)
+	GPIO.setup(server3_reset,GPIO.OUT)
+	GPIO.setup(server4_power,GPIO.OUT)
+	GPIO.setup(server4_reset,GPIO.OUT)
+	########
+	GPIO.output(server1_power,GPIO.HIGH)
+	GPIO.output(server1_reset,GPIO.HIGH)
+	GPIO.output(server2_power,GPIO.HIGH)
+	GPIO.output(server2_reset,GPIO.HIGH)
+	GPIO.output(server3_power,GPIO.HIGH)
+	GPIO.output(server3_reset,GPIO.HIGH)
+	GPIO.output(server4_power,GPIO.HIGH)
+	GPIO.output(server4_reset,GPIO.HIGH)
+################################################################################
+#This class will handles any incoming request from
+#the browser
+class myHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+	#Handler for the GET requests
+	def do_GET(self):
+		with open("index.html", "r") as httpFile:
+			httpData=httpFile.read()
+		# -------------------------------------------
+		self.send_response(200)
+		self.send_header('Content-type','text/html')
+		self.end_headers()
+		# -------------------------------------------
+		if str(self.path) == '/server1_power_on':
+			GPIO.output(server1_power,GPIO.LOW)
+			sleep(0.5)
+			GPIO.output(server1_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server1_power_off':
+			GPIO.output(server1_power,GPIO.LOW)
+			sleep(7)
+			GPIO.output(server1_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server1_power_reset':
+			GPIO.output(server1_reset,GPIO.LOW)
+			sleep(1)
+			GPIO.output(server1_reset,GPIO.HIGH)
+			self.wfile.write(httpData)
+		# ------------------------------------------
+		elif str(self.path) == '/server2_power_on':
+			GPIO.output(server2_power,GPIO.LOW)
+			sleep(0.5)
+			GPIO.output(server2_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server2_power_off':
+			GPIO.output(server2_power,GPIO.LOW)
+			sleep(7)
+			GPIO.output(server2_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server2_power_reset':
+			GPIO.output(server2_reset,GPIO.LOW)
+			sleep(1)
+			GPIO.output(server2_reset,GPIO.HIGH)
+			self.wfile.write(httpData)
+		# ------------------------------------------
+		elif str(self.path) == '/server3_power_on':
+			GPIO.output(server3_power,GPIO.LOW)
+			sleep(0.5)
+			GPIO.output(server3_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server3_power_off':
+			GPIO.output(server3_power,GPIO.LOW)
+			sleep(7)
+			GPIO.output(server3_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server3_power_reset':
+			GPIO.output(server3_reset,GPIO.LOW)
+			sleep(1)
+			GPIO.output(server3_reset,GPIO.HIGH)
+			self.wfile.write(httpData)
+		# ------------------------------------------
+		elif str(self.path) == '/server4_power_on':
+			GPIO.output(server4_power,GPIO.LOW)
+			sleep(0.5)
+			GPIO.output(server4_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server4_power_off':
+			GPIO.output(server4_power,GPIO.LOW)
+			sleep(7)
+			GPIO.output(server4_power,GPIO.HIGH)
+			self.wfile.write(httpData)
+		elif str(self.path) == '/server4_power_reset':
+			GPIO.output(server4_reset,GPIO.LOW)
+			sleep(1)
+			GPIO.output(server4_reset,GPIO.HIGH)
+			self.wfile.write(httpData)
+		# ------------------------------------------
+		else:
+			self.wfile.write(httpData)
+		return
+################################################################################
+handler_object = myHandler
+################################################################################
+if __name__ == '__main__':
+	doSetup()
+
+	try:
+		
+
+		my_server = BaseHTTPServer.HTTPServer(('', httpPort), myHandler)
+		# my_server = SocketServer.TCPServer(("", httpPort), handler_object)
+		print 'Started httpserver on port ' , httpPort
+
+		#Wait forever for incoming htto requests
+		my_server.serve_forever()
+	except KeyboardInterrupt:
+		print '^C received, shutting down the web server'
+		my_server.socket.close()
+
+
+#relayGPIO = 18
+#GPIO.setup(relayGPIO,GPIO.OUT)
+################################################################################
