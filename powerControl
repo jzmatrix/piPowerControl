@@ -44,6 +44,18 @@ def doSetup():
 	GPIO.output(server4_power,GPIO.HIGH)
 	GPIO.output(server4_reset,GPIO.HIGH)
 ################################################################################
+def doCleanUp():
+	# Ensure all pins are set to 'high'
+	########
+	GPIO.output(server1_power,GPIO.HIGH)
+	GPIO.output(server1_reset,GPIO.HIGH)
+	GPIO.output(server2_power,GPIO.HIGH)
+	GPIO.output(server2_reset,GPIO.HIGH)
+	GPIO.output(server3_power,GPIO.HIGH)
+	GPIO.output(server3_reset,GPIO.HIGH)
+	GPIO.output(server4_power,GPIO.HIGH)
+	GPIO.output(server4_reset,GPIO.HIGH)
+################################################################################
 #This class will handles any incoming request from
 #the browser
 class myHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -130,19 +142,11 @@ if __name__ == '__main__':
 	doSetup()
 
 	try:
-		
-
 		my_server = BaseHTTPServer.HTTPServer(('', httpPort), myHandler)
-		# my_server = SocketServer.TCPServer(("", httpPort), handler_object)
 		print 'Started httpserver on port ' , httpPort
 
-		#Wait forever for incoming htto requests
 		my_server.serve_forever()
 	except KeyboardInterrupt:
 		print '^C received, shutting down the web server'
+		doCleanUp()
 		my_server.socket.close()
-
-
-#relayGPIO = 18
-#GPIO.setup(relayGPIO,GPIO.OUT)
-################################################################################
